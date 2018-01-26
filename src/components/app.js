@@ -1,24 +1,24 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import Paper from 'material-ui/Paper';
-import styled from 'react-emotion';
+import injectSheet from 'react-jss';
 import TopMenu from './topMenu';
 import Menu from './menu';
+import Board from './board'
 
-const Container = styled(Paper)`
-  width: 90vw;
-  height: 80vh;
-  margin: 50px auto;
-  /* background-color: red !important; */
-`
+const styles = {
+  container: {
+    width: 330,
+    height: 400,
+    margin: '50px auto'
+  }
+}
 
-
-const App = () => (
-  <Fragment>
-    <Container>
-      <TopMenu />
-      <Menu />
-    </Container>
-  </Fragment>
+const App = props => (
+  <Paper className={props.classes.container}>
+    <TopMenu />
+    {/* <Board /> */}
+    <Menu />
+  </Paper>
 );
 
-export default App;
+export default injectSheet(styles)(App);

@@ -1,30 +1,32 @@
 import React from "react";
 import Button from "material-ui/Button/Button";
-import styled from 'react-emotion';
+import injectSheet from 'react-jss';
 
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 16px;
-`
+const styles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    fontSize: 16
+  },
+  statistic: {   
+    display: 'inline-block',
+    padding: 20
+  },
+  button: {
+    margin: 20
+  }
+};
 
-const Statistic = styled.div`
-  display: inline-block;
-  padding: 20px;
-`
-
-const TopMenuButton = styled(Button)`
-  margin: 20px;
-`
-
-const TopMenu = () => (
-  <Container>
-    <Statistic>
+const TopMenu = props => (
+  <div className={props.classes.container}>
+    <div className={props.classes.statistic}>
       <span>Player 1 : </span><br/>
       <span>Player 2 : </span>
-    </Statistic>
-    <TopMenuButton color="primary" raised>Reset</TopMenuButton>
-  </Container>
+    </div>
+    <Button className={props.classes.button} color="primary" raised>
+      Reset
+    </Button>
+  </div>
 );
 
-export default TopMenu;
+export default injectSheet(styles)(TopMenu);

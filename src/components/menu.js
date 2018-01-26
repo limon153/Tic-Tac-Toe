@@ -1,17 +1,23 @@
 import React from 'react';
 import Button from 'material-ui/Button/Button';
-import styled from 'react-emotion';
+import injectSheet from 'react-jss';
 
-const Container = styled.div`
-  text-align: center;
-`
+const styles = {
+  container: {
+    marginTop: 50,
+    textAlign: 'center'
+  },
+  button: {
+    color: 'inherit'
+  }
+};
 
-const Menu = () => (
-  <Container>
+const Menu = props => (
+  <div className={props.classes.container}>
     <h2>Choose Game Mode</h2>
-    <Button>Single</Button>
-    <Button>Multiplayer</Button>
-  </Container>
+    <Button className={props.classes.button} >Single</Button>
+    <Button className={props.classes.button} >Multiplayer</Button>
+  </div>
 );
 
-export default Menu;
+export default injectSheet(styles)(Menu);
