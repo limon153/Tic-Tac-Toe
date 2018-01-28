@@ -14,8 +14,10 @@ const styles = {
 };
 
 const Square = props => (
-  <button className={props.classes.square}>
-    {props.children}
+  <button 
+  className={props.classes.square}
+  onClick={() => props.onClick()} >
+    {props.value}
   </button>
 );
 
