@@ -4,6 +4,7 @@ import Button from 'material-ui/Button';
 import injectSheet from 'react-jss';
 
 import Square from './square';
+import { checkWinner } from './game';
 
 const styles = {
   row: {
@@ -35,14 +36,20 @@ class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(9).fill(null)
+      squares: Array(9).fill(null),
+      isPlayer1Next: true
     }
   }
 
   handleClick(i) {
     const squares = this.state.squares.slice();
-    squares[i] = 'X';
-    this.setState({squares: squares});
+    if(!squares[i]) {
+      squares[i] = this.state.isPlayer1Next ? 'X' : 'O';
+      this.setState({
+        squares: squares,
+        isPlayer1Next: !this.state.isPlayer1Next
+      });
+    }
   }
 
   renderSquare(i) {
@@ -55,6 +62,12 @@ class Board extends Component {
   }
 
   render() {
+
+    const winner = checkWinner(this.state.squares);
+    if(winner) {
+      console.log(winner);
+    }
+
     return (
       <div>
         <div className={this.props.classes.row}>

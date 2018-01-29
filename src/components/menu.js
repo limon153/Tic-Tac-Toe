@@ -16,7 +16,9 @@ const Menu = props => (
   <div className={props.classes.container}>
     <h2>Choose Game Mode</h2>
     <Button className={props.classes.button} >Single</Button>
-    <Button className={props.classes.button} >Multiplayer</Button>
+    <Button className={props.classes.button}>
+      Multiplayer
+    </Button>
   </div>
 );
 
