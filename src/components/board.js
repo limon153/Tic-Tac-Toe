@@ -35,38 +35,18 @@ class Board extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      squares: Array(9).fill(null),
-      isPlayer1Next: true
-    }
-  }
-
-  handleClick(i) {
-    const squares = this.state.squares.slice();
-    if(!squares[i]) {
-      squares[i] = this.state.isPlayer1Next ? 'X' : 'O';
-      this.setState({
-        squares: squares,
-        isPlayer1Next: !this.state.isPlayer1Next
-      });
-    }
   }
 
   renderSquare(i) {
     return (
       <Square 
-        value={this.state.squares[i]}
-        onClick={() => this.handleClick(i)}
+        value={this.props.squares[i]}
+        onClick={() => this.props.handleClick(i)}
       />
     );
   }
 
   render() {
-
-    const winner = checkWinner(this.state.squares);
-    if(winner) {
-      console.log(winner);
-    }
 
     return (
       <div>

@@ -25,8 +25,8 @@ const TopMenu = props => (
     <TurnCard />
     <TurnCard />
     <div className={props.classes.statistic}>
-      <span>Player 1 : </span><br/>
-      <span>Player 2 : </span>
+      <span>Player 1 : {props.stats.player1}</span><br/>
+      <span>Player 2 : {props.stats.player2}</span>
     </div>
     <Button className={props.classes.button} color="primary" raised>
       Reset
