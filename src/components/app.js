@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper';
 import injectSheet from 'react-jss';
 
 import TopMenu from './topMenu';
-import Menu from './menu';
+import {ModeMenu, PlayerMenu} from './menus';
 import Board from './board';
 import {checkWinner} from './game';
 
@@ -26,15 +26,13 @@ class App extends Component {
         player1: 0,
         player2: 0
       },
-      gameMode: 'chooseMode'
+      gameState: 'chooseMode'
     }
-
-    this.changeMode = this.changeMode.bind(this);
   }
 
-  changeMode(mode) {
+  changeMode(player, mode, state) {
     this.setState({
-      gameMode: mode
+      gameState: state
     });
   }
 
@@ -73,16 +71,20 @@ class App extends Component {
   render() {
 
     let content = null;
-    if (this.state.gameMode === 'game') {
+    if (this.state.gameState === 'game') {
       content = <Board 
         handleClick={i => this.handleMove(i)}
         squares={this.state.squares}
         isPlayer1Next={this.state.isPlayer1Next} />
-    } else {
-      console.log(this.state.gameMode);
-      content = <Menu 
-        changeMode={this.changeMode}
-        mode={this.state.gameMode} />
+    } else if (this.state.gameState === 'chooseMode') {
+      console.log(this.state.gameState);
+      content = <ModeMenu
+        changeMode={(player, mode) => this.changeMode(player, mode, 'choosePlayer')}
+      />
+    } else if (this.state.gameState === 'choosePlayer') {
+      content = <PlayerMenu
+        changeMode={() => this.changeMode('game') }
+      />
     }
 
 
