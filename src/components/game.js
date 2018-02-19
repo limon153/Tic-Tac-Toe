@@ -9,7 +9,7 @@ const winCombos = [
   [2, 4, 6],
 ];
 
-export default function checkWinner(squares) {
+export function checkWinner(squares) {
   for (let i = 0; i < winCombos.length; i++) {
     const [a, b, c] = winCombos[i];
     if (squares[a] && squares[a] === squares[b] && squares[b] === squares[c]) {
