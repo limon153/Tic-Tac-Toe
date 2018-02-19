@@ -8,19 +8,19 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   devServer: {
-    contentBase: './public'
+    contentBase: './public',
   },
-  devtool: NODE_ENV == 'development' ? 'source-map' : false,
+  devtool: NODE_ENV === 'development' ? 'source-map' : false,
   resolve: {
     modules: ['node_modules'],
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx'],
   },
   resolveLoader: {
     modules: ['node_modules'],
-    extensions: ['*', '.js']
+    extensions: ['*', '.js'],
   },
   module: {
     rules: [
@@ -28,27 +28,25 @@ module.exports = {
         test: /\.js?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.html$/,
         use: {
-          loader: 'html-loader'
-        }
-      }
-    ]
+          loader: 'html-loader',
+        },
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      inject: 'body'
-    })
-  ]
+      inject: 'body',
+    }),
+  ],
 };
 
-if (NODE_ENV == 'production') {
-  module.exports.plugins.push(
-    new webpack.optimize.UglifyJsPlugin()
-  );
+if (NODE_ENV === 'production') {
+  module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin());
 }

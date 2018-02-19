@@ -9,14 +9,12 @@ const styles = {
     color: 'inherit',
     backgroundColor: 'inherit',
     border: '1px solid black',
-    outline: 'none'
-  }
+    outline: 'none',
+  },
 };
 
 const Square = props => (
-  <button 
-  className={props.classes.square}
-  onClick={() => props.onClick()} >
+  <button className={props.classes.square} onClick={() => props.onClick()}>
     {props.value}
   </button>
 );

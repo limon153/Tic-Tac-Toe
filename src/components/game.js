@@ -1,4 +1,3 @@
-
 const winCombos = [
   [0, 1, 2],
   [3, 4, 5],
@@ -7,16 +6,13 @@ const winCombos = [
   [1, 4, 7],
   [2, 5, 8],
   [0, 4, 8],
-  [2, 4, 6]
+  [2, 4, 6],
 ];
 
-export function checkWinner(squares) {
-
+export default function checkWinner(squares) {
   for (let i = 0; i < winCombos.length; i++) {
     const [a, b, c] = winCombos[i];
-    if (squares[a] && squares[a] === squares[b] && 
-      squares[b] === squares[c]) {
-
+    if (squares[a] && squares[a] === squares[b] && squares[b] === squares[c]) {
       return squares[a];
     }
   }

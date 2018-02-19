@@ -5,27 +5,38 @@ import injectSheet from 'react-jss';
 const styles = {
   container: {
     marginTop: 50,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   button: {
-    color: 'inherit'
-  }
+    color: 'inherit',
+  },
 };
 
-
 const MenuTemplate = props => {
+  let nextState = null;
+  switch (props.title) {
+    case 'chooseMode':
+      nextState = 'choosePlayer';
+      break;
+    case 'choosePlayer':
+      nextState = 'game';
+      break;
+    default:
+      break;
+  }
+
   return (
     <div className={props.classes.container}>
       <h2>{props.title}</h2>
-      <Button 
+      <Button
         className={props.classes.button}
-        onClick={props.changeMode}
+        onClick={props.changeMode(props.options[0], nextState)}
       >
         {props.options[0]}
       </Button>
       <Button
         className={props.classes.button}
-        onClick={props.changeMode}
+        onClick={props.changeMode(props.options[1], nextState)}
       >
         {props.options[1]}
       </Button>
