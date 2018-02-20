@@ -15,10 +15,10 @@ const styles = {
 const MenuTemplate = props => {
   let nextState = null;
   switch (props.title) {
-    case 'chooseMode':
+    case 'Choose Mode':
       nextState = 'choosePlayer';
       break;
-    case 'choosePlayer':
+    case 'Choose Player':
       nextState = 'game';
       break;
     default:

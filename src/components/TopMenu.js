@@ -29,7 +29,7 @@ const TopMenu = props => (
       <br />
       <span>Player 2 : {props.stats.player2}</span>
     </div>
-    <Button className={props.classes.button} color="primary" raised>
+    <Button className={props.classes.button} color="primary" variant="raised">
       Reset
     </Button>
   </div>

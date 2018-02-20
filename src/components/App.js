@@ -29,7 +29,6 @@ class App extends Component {
   };
 
   changeMode = (response, state) => () => {
-    console.log(state);
     if (response === 'Single' || response === 'Multi') {
       this.setState({
         gameState: state,
@@ -61,7 +60,6 @@ class App extends Component {
     const winner = checkWinner(this.state.squares);
     // if winner === player1Sign
     if (winner) {
-      console.log(winner);
       this.setState(prevState => ({
         stats: {
           player1: prevState.stats.player1 + 1,
@@ -84,10 +82,9 @@ class App extends Component {
         />
       );
     } else if (this.state.gameState === 'chooseMode') {
-      console.log(this.state.gameState);
-      content = <ModeMenu changeMode={this.changeMode()} />;
+      content = <ModeMenu changeMode={this.changeMode} />;
     } else if (this.state.gameState === 'choosePlayer') {
-      content = <PlayerMenu changeMode={this.changeMode()} />;
+      content = <PlayerMenu changeMode={this.changeMode} />;
     }
 
     return (
