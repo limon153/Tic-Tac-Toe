@@ -5,7 +5,7 @@ import MenuTemplate from './MenuTemplate';
 export const ModeMenu = props => (
   <MenuTemplate
     title="Choose Mode"
-    options={['Single', 'Multi']}
+    options={['single', 'multi']}
     changeMode={props.changeMode}
   />
 );

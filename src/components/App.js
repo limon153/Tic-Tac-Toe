@@ -29,7 +29,7 @@ class App extends Component {
   };
 
   changeMode = (response, state) => () => {
-    if (response === 'Single' || response === 'Multi') {
+    if (response === 'single' || response === 'sulti') {
       this.setState({
         gameState: state,
         gameMode: response,
@@ -50,9 +50,14 @@ class App extends Component {
     const squares = this.state.squares.slice();
     const player1Sign = this.state.player1Sign;
     if (!squares[i]) {
-      squares[i] = this.state.isPlayer1Next
-        ? player1Sign
-        : this.getPlayer2Sign(player1Sign);
+      if (this.state.gameMode === 'single') {
+        squares[i] = player1Sign;
+        // botMove();
+      } else {
+        squares[i] = this.state.isPlayer1Next
+          ? player1Sign
+          : this.getPlayer2Sign(player1Sign);
+      }
       this.setState(
         {
           squares,
