@@ -58,26 +58,39 @@ class App extends Component {
           squares,
           isPlayer1Next: !this.state.isPlayer1Next,
         },
-        () => this.addStat()
+        () => this.endGame()
       );
     }
   }
 
   // FIXME: add stat depending on player1Sign and player who actually wins
   addStat() {
-    const winner = checkWinner(this.state.squares);
-    if (winner) {
-      this.setState(prevState => ({
-        stats: {
-          player1: prevState.stats.player1 + 1,
-          player2: prevState.stats.player2,
-        },
-      }));
-    }
+    this.setState(prevState => ({
+      stats: {
+        player1: prevState.stats.player1 + 1,
+        player2: prevState.stats.player2,
+      },
+    }));
   }
 
   // TODO: Add game ending
-  endGame() {}
+  endGame() {
+    const winner = checkWinner(this.state.squares);
+    if (winner || this.checkDraw(this.state.squares)) {
+      this.setState({
+        squares: Array(9).fill(null),
+        isPlayer1Next: true,
+      });
+      if (winner) {
+        this.addStat();
+      }
+    }
+  }
+
+  checkDraw(squares) {
+    if (squares.indexOf(null) === -1) return true;
+    return false;
+  }
 
   render() {
     let content = null;
