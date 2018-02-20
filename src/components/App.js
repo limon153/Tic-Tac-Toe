@@ -42,10 +42,17 @@ class App extends Component {
     }
   };
 
+  getPlayer2Sign(player1Sign) {
+    return player1Sign === 'X' ? 'O' : 'X';
+  }
+
   handleMove(i) {
     const squares = this.state.squares.slice();
+    const player1Sign = this.state.player1Sign;
     if (!squares[i]) {
-      squares[i] = this.state.isPlayer1Next ? 'X' : 'O';
+      squares[i] = this.state.isPlayer1Next
+        ? player1Sign
+        : this.getPlayer2Sign(player1Sign);
       this.setState(
         {
           squares,
@@ -56,9 +63,9 @@ class App extends Component {
     }
   }
 
+  // FIXME: add stat depending on player1Sign and player who actually wins
   addStat() {
     const winner = checkWinner(this.state.squares);
-    // if winner === player1Sign
     if (winner) {
       this.setState(prevState => ({
         stats: {
@@ -69,6 +76,7 @@ class App extends Component {
     }
   }
 
+  // TODO: Add game ending
   endGame() {}
 
   render() {
@@ -89,8 +97,7 @@ class App extends Component {
 
     return (
       <Paper className={this.props.classes.container}>
-        <TopMenu stats={this.state.stats} />
-        {content}
+        <TopMenu stats={this.state.stats} /> {content}
       </Paper>
     );
   }
