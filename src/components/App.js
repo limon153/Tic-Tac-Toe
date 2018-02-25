@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Paper from 'material-ui/Paper';
 import injectSheet from 'react-jss';
+import Paper from 'material-ui/Paper';
+import Snackbar from 'material-ui/Snackbar';
+import Button from 'material-ui/Button';
 
 import TopMenu from './TopMenu';
 import { ModeMenu, PlayerMenu } from './Menus';
@@ -12,6 +14,11 @@ const styles = {
     width: 330,
     height: 400,
     margin: '50px auto',
+    position: 'relative',
+  },
+  snackbar: {
+    position: 'absolute',
+    overflow: 'hidden',
   },
 };
 
@@ -26,6 +33,8 @@ class App extends Component {
     gameState: 'chooseMode',
     gameMode: 'single',
     player1Sign: 'X',
+    winSnackbarOpen: false,
+    winner: 'draw',
   };
 
   changeMode = (response, state) => () => {
@@ -116,14 +125,26 @@ class App extends Component {
   }
 
   endGame() {
-    const winner = checkWinner(this.state.squares);
-    if (winner || this.checkDraw(this.state.squares)) {
+    const winnerSign = checkWinner(this.state.squares);
+    const isDraw = this.checkDraw(this.state.squares);
+    const { player1Sign } = this.state;
+    let winner;
+    if (winnerSign === player1Sign) {
+      winner = 'player1';
+    } else if (winnerSign !== null) {
+      winner = 'player2';
+    } else if (isDraw) {
+      winner = 'draw';
+    }
+    if (winnerSign || isDraw) {
       this.setState({
         squares: Array(9).fill(null),
         isPlayer1Next: true,
+        winner,
+        winSnackbarOpen: true,
       });
-      if (winner) {
-        this.addStat(winner);
+      if (winnerSign) {
+        this.addStat(winnerSign);
       }
     }
   }
@@ -147,8 +168,16 @@ class App extends Component {
     });
   };
 
+  handleCloseSnackbar = () => {
+    this.setState({
+      winSnackbarOpen: false,
+    });
+  };
+
   render() {
     let content = null;
+    const { winner } = this.state;
+    let snackBarMessage;
     if (this.state.gameState === 'game') {
       content = (
         <Board
@@ -163,9 +192,41 @@ class App extends Component {
       content = <PlayerMenu changeMode={this.changeMode} />;
     }
 
+    switch (winner) {
+      case 'player1':
+        snackBarMessage = 'Player 1 wins';
+        break;
+      case 'player2':
+        snackBarMessage = 'Player 2 wins';
+        break;
+      case 'draw':
+        snackBarMessage = "It's a draw";
+        break;
+      default:
+        break;
+    }
+
     return (
       <Paper className={this.props.classes.container}>
-        <TopMenu handleReset={this.reset} stats={this.state.stats} /> {content}
+        <TopMenu handleReset={this.reset} stats={this.state.stats} />
+        {content}
+        <Snackbar
+          className={this.props.classes.snackbar}
+          message={<span>{snackBarMessage}</span>}
+          open={this.state.winSnackbarOpen}
+          autoHideDuration={3000}
+          onClose={this.handleCloseSnackbar}
+          action={[
+            <Button
+              key="dismiss"
+              color="secondary"
+              size="small"
+              onClick={this.handleCloseSnackbar}
+            >
+              Dismiss
+            </Button>,
+          ]}
+        />
       </Paper>
     );
   }
