@@ -29,7 +29,7 @@ class App extends Component {
   };
 
   changeMode = (response, state) => () => {
-    if (response === 'single' || response === 'sulti') {
+    if (response === 'single' || response === 'multi') {
       this.setState({
         gameState: state,
         gameMode: response,
@@ -64,7 +64,9 @@ class App extends Component {
         squares[i] = this.state.isPlayer1Next
           ? player1Sign
           : this.getPlayer2Sign(player1Sign);
-        this.move(squares);
+        this.move(squares).then(v => {
+          return this.endGame();
+        });
       }
     }
   }
