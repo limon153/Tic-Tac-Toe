@@ -5,7 +5,7 @@ import injectSheet from 'react-jss';
 import TopMenu from './TopMenu';
 import { ModeMenu, PlayerMenu } from './Menus';
 import Board from './Board';
-import { checkWinner } from './game';
+import { checkWinner, getAiNextMove } from './game';
 
 const styles = {
   container: {
@@ -51,24 +51,46 @@ class App extends Component {
     const player1Sign = this.state.player1Sign;
     if (!squares[i]) {
       if (this.state.gameMode === 'single') {
-        squares[i] = player1Sign;
-        // botMove();
+        if (this.state.isPlayer1Next) {
+          squares[i] = player1Sign;
+          this.move(squares).then(v => {
+            if (squares.indexOf(null) === -1) {
+              return this.endGame();
+            }
+            return this.botMove();
+          });
+        }
       } else {
         squares[i] = this.state.isPlayer1Next
           ? player1Sign
           : this.getPlayer2Sign(player1Sign);
+        this.move(squares);
       }
-      this.setState(
-        {
-          squares,
-          isPlayer1Next: !this.state.isPlayer1Next,
-        },
-        () => this.endGame()
-      );
     }
   }
 
-  // FIXME: add stat depending on player1Sign and player who actually wins
+  move(squares) {
+    return new Promise((resolve, reject) => {
+      this.setState(() => ({
+        squares,
+        isPlayer1Next: !this.state.isPlayer1Next,
+      }));
+      resolve();
+    });
+  }
+
+  botMove() {
+    const aiSign = this.getPlayer2Sign(this.state.player1Sign);
+    const squares = this.state.squares.slice();
+    if (squares.indexOf(null) !== -1) {
+      const aiPos = getAiNextMove(squares, aiSign);
+      squares[aiPos] = aiSign;
+      this.move(squares).then(v => {
+        return this.endGame();
+      });
+    }
+  }
+
   addStat(winner) {
     let firstPlayerScores;
     let secondPlayerScores;
