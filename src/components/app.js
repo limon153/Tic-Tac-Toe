@@ -131,6 +131,20 @@ class App extends Component {
     return false;
   }
 
+  reset = () => {
+    this.setState({
+      squares: Array(9).fill(null),
+      isPlayer1Next: true,
+      stats: {
+        player1: 0,
+        player2: 0,
+      },
+      gameState: 'chooseMode',
+      gameMode: 'single',
+      player1Sign: 'X',
+    });
+  };
+
   render() {
     let content = null;
     if (this.state.gameState === 'game') {
@@ -149,7 +163,7 @@ class App extends Component {
 
     return (
       <Paper className={this.props.classes.container}>
-        <TopMenu stats={this.state.stats} /> {content}
+        <TopMenu handleReset={this.reset} stats={this.state.stats} /> {content}
       </Paper>
     );
   }
