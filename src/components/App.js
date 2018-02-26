@@ -221,7 +221,7 @@ class App extends Component {
           className={this.props.classes.snackbar}
           message={<span>{snackBarMessage}</span>}
           open={this.state.winSnackbarOpen}
-          autoHideDuration={3000}
+          autoHideDuration={1500}
           onClose={this.handleCloseSnackbar}
           action={[
             <Button
