@@ -96,9 +96,11 @@ class App extends Component {
     if (squares.indexOf(null) !== -1) {
       const aiPos = getAiNextMove(squares, aiSign);
       squares[aiPos] = aiSign;
-      this.move(squares).then(v => {
-        return this.endGame();
-      });
+      setTimeout(() => {
+        this.move(squares).then(v => {
+          return this.endGame();
+        });
+      }, 500);
     }
   }
 

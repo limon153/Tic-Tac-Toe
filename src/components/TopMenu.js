@@ -27,18 +27,21 @@ const TopMenu = props => {
     player1Hidden = props.isPlayer1Next ? false : true;
     player2Hidden = props.isPlayer1Next ? true : false;
   }
+  const player1Name = props.gameMode === 'single' ? 'Player' : 'Player 1';
+  const player2Name = props.gameMode === 'single' ? 'Bot' : 'Player 2';
 
   return (
     <div className={props.classes.container}>
-      <TurnCard hidden={player1Hidden} player={'Player 1'} />
-      <TurnCard
-        hidden={player2Hidden}
-        player={props.gameMode === 'single' ? 'Bot' : 'Player 2'}
-      />
+      <TurnCard hidden={player1Hidden} player={player1Name} />
+      <TurnCard hidden={player2Hidden} player={player2Name} />
       <div className={props.classes.statistic}>
-        <span>Player 1 : {props.stats.player1}</span>
+        <span>
+          {player1Name} : {props.stats.player1}
+        </span>
         <br />
-        <span>Player 2 : {props.stats.player2}</span>
+        <span>
+          {player2Name} : {props.stats.player2}
+        </span>
       </div>
       <Button
         onClick={props.handleReset}
