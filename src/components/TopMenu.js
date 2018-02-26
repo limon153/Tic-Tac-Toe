@@ -20,24 +20,36 @@ const styles = {
   },
 };
 
-const TopMenu = props => (
-  <div className={props.classes.container}>
-    <TurnCard />
-    <TurnCard />
-    <div className={props.classes.statistic}>
-      <span>Player 1 : {props.stats.player1}</span>
-      <br />
-      <span>Player 2 : {props.stats.player2}</span>
+const TopMenu = props => {
+  let player1Hidden = true,
+    player2Hidden = true;
+  if (props.gameState === 'game') {
+    player1Hidden = props.isPlayer1Next ? false : true;
+    player2Hidden = props.isPlayer1Next ? true : false;
+  }
+
+  return (
+    <div className={props.classes.container}>
+      <TurnCard hidden={player1Hidden} player={'Player 1'} />
+      <TurnCard
+        hidden={player2Hidden}
+        player={props.gameMode === 'single' ? 'Bot' : 'Player 2'}
+      />
+      <div className={props.classes.statistic}>
+        <span>Player 1 : {props.stats.player1}</span>
+        <br />
+        <span>Player 2 : {props.stats.player2}</span>
+      </div>
+      <Button
+        onClick={props.handleReset}
+        className={props.classes.button}
+        color="primary"
+        variant="raised"
+      >
+        Reset
+      </Button>
     </div>
-    <Button
-      onClick={props.handleReset}
-      className={props.classes.button}
-      color="primary"
-      variant="raised"
-    >
-      Reset
-    </Button>
-  </div>
-);
+  );
+};
 
 export default injectSheet(styles)(TopMenu);

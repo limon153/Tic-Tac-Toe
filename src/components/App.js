@@ -176,7 +176,6 @@ class App extends Component {
 
   render() {
     let content = null;
-    const { winner } = this.state;
     let snackBarMessage;
     if (this.state.gameState === 'game') {
       content = (
@@ -192,7 +191,7 @@ class App extends Component {
       content = <PlayerMenu changeMode={this.changeMode} />;
     }
 
-    switch (winner) {
+    switch (this.state.winner) {
       case 'player1':
         snackBarMessage = 'Player 1 wins';
         break;
@@ -208,7 +207,13 @@ class App extends Component {
 
     return (
       <Paper className={this.props.classes.container}>
-        <TopMenu handleReset={this.reset} stats={this.state.stats} />
+        <TopMenu
+          isPlayer1Next={this.state.isPlayer1Next}
+          handleReset={this.reset}
+          stats={this.state.stats}
+          gameState={this.state.gameState}
+          gameMode={this.state.gameMode}
+        />
         {content}
         <Snackbar
           className={this.props.classes.snackbar}

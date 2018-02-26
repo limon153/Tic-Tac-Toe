@@ -25,10 +25,12 @@ const styles = {
   },
 };
 
-const TurnCard = props => (
-  <Paper className={props.classes.turn}>
-    <span className={props.classes.span}>Your turn</span>
-  </Paper>
-);
+const TurnCard = ({ classes, player }) => {
+  return (
+    <Paper className={classes.turn}>
+      <span className={classes.span}>{player} turn</span>
+    </Paper>
+  );
+};
 
 export default injectSheet(styles)(TurnCard);
