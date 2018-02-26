@@ -35,6 +35,7 @@ class App extends Component {
     player1Sign: 'X',
     winSnackbarOpen: false,
     winner: 'draw',
+    openResetDialog: false,
   };
 
   changeMode = (response, state) => () => {
@@ -156,6 +157,18 @@ class App extends Component {
     return false;
   }
 
+  openResetDialog = () => {
+    this.setState({
+      openResetDialog: true,
+    });
+  };
+
+  closeResetDialog = () => {
+    this.setState({
+      openResetDialog: false,
+    });
+  };
+
   reset = () => {
     this.setState({
       squares: Array(9).fill(null),
@@ -167,6 +180,9 @@ class App extends Component {
       gameState: 'chooseMode',
       gameMode: 'single',
       player1Sign: 'X',
+      winSnackbarOpen: false,
+      winner: 'draw',
+      openResetDialog: false,
     });
   };
 
@@ -211,7 +227,10 @@ class App extends Component {
       <Paper className={this.props.classes.container}>
         <TopMenu
           isPlayer1Next={this.state.isPlayer1Next}
-          handleReset={this.reset}
+          handleReset={this.openResetDialog}
+          handleCloseDialog={this.closeResetDialog}
+          openResetDialog={this.state.openResetDialog}
+          resetAction={this.reset}
           stats={this.state.stats}
           gameState={this.state.gameState}
           gameMode={this.state.gameMode}

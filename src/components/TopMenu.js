@@ -3,6 +3,7 @@ import Button from 'material-ui/Button/Button';
 import injectSheet from 'react-jss';
 
 import TurnCard from './TurnCard';
+import ResetDialog from './ResetDialog';
 
 const styles = {
   container: {
@@ -51,6 +52,11 @@ const TopMenu = props => {
       >
         Reset
       </Button>
+      <ResetDialog
+        handleClose={props.handleCloseDialog}
+        handleReset={props.resetAction}
+        open={props.openResetDialog}
+      />
     </div>
   );
 };
